@@ -15,11 +15,11 @@ const swaggerOptions = {
       version: '1.0.0',
       description: 'API para gerenciar tarefas e usuários',
       contact: {
-        name: 'Seu Nome'
+        name: 'Leonardo Miclos'
       },
       servers: [
         {
-          url: 'http://localhost:3000',
+          url: 'http://localhost:3000/api',
           description: 'Servidor Local'
         }
       ]
@@ -44,11 +44,11 @@ const swaggerOptions = {
 
 // Inicializa o Swagger
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
-router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+router.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 /**
  * @swagger
- * /register:
+ * /api/register:
  *   post:
  *     summary: Registra um novo usuário
  *     tags: [Usuários]
@@ -72,11 +72,11 @@ router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
  *       400:
  *         description: Erro de validação
  */
-router.post('/register', register);
+router.post('/api/register', register);
 
 /**
  * @swagger
- * /login:
+ * /api/login:
  *   post:
  *     summary: Realiza o login do usuário
  *     tags: [Usuários]
@@ -100,13 +100,13 @@ router.post('/register', register);
  *       401:
  *         description: Credenciais inválidas
  */
-router.post('/login', login);
+router.post('/api/login', login);
 
 router.use(authenticate);
 
 /**
  * @swagger
- * /tasks:
+ * /api/tasks:
  *   post:
  *     summary: Cria uma nova tarefa
  *     tags: [Tarefas]
@@ -130,11 +130,11 @@ router.use(authenticate);
  *       201:
  *         description: Tarefa criada com sucesso
  */
-router.post('/tasks', createTask);
+router.post('/api/tasks', createTask);
 
 /**
  * @swagger
- * /tasks:
+ * /api/tasks:
  *   get:
  *     summary: Retorna todas as tarefas
  *     tags: [Tarefas]
@@ -144,11 +144,11 @@ router.post('/tasks', createTask);
  *       200:
  *         description: Lista de tarefas
  */
-router.get('/tasks', getTasks);
+router.get('/api/tasks', getTasks);
 
 /**
  * @swagger
- * /tasks/{id}:
+ * /api/tasks/{id}:
  *   put:
  *     summary: Atualiza uma tarefa existente
  *     tags: [Tarefas]
@@ -178,11 +178,11 @@ router.get('/tasks', getTasks);
  *       404:
  *         description: Tarefa não encontrada
  */
-router.put('/tasks/:id', updateTask);
+router.put('/api/tasks/:id', updateTask);
 
 /**
  * @swagger
- * /tasks/{id}:
+ * /api/tasks/{id}:
  *   delete:
  *     summary: Exclui uma tarefa
  *     tags: [Tarefas]
@@ -201,11 +201,11 @@ router.put('/tasks/:id', updateTask);
  *       404:
  *         description: Tarefa não encontrada
  */
-router.delete('/tasks/:id', deleteTask);
+router.delete('/api/tasks/:id', deleteTask);
 
 /**
  * @swagger
- * /users:
+ * /api/users:
  *   get:
  *     summary: Retorna todos os usuários
  *     tags: [Usuários]
@@ -215,11 +215,11 @@ router.delete('/tasks/:id', deleteTask);
  *       200:
  *         description: Lista de usuários
  */
-router.get('/users', getUsers);
+router.get('/api/users', getUsers);
 
 /**
  * @swagger
- * /users:
+ * /api/users:
  *   delete:
  *     summary: Exclui um usuário
  *     tags: [Usuários]
@@ -229,6 +229,6 @@ router.get('/users', getUsers);
  *       204:
  *         description: Usuário excluído
  */
-router.delete('/users', deleteUser);
+router.delete('/api/users', deleteUser);
 
 module.exports = router;
