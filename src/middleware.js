@@ -1,7 +1,5 @@
-// src/middleware.js
 const jwt = require('jsonwebtoken');
 
-// Middleware de autenticação
 exports.authenticate = (req, res, next) => {
   const token = req.header('Authorization')?.replace('Bearer ', '');
   if (!token) return res.status(401).json({ message: 'Access denied' });
