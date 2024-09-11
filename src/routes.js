@@ -1,6 +1,5 @@
 const express = require('express');
 const { register, login, createTask, getTasks, updateTask, deleteTask, getUsers, deleteUser } = require('./controllers');
-const { authenticate } = require('./middleware');
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
@@ -44,11 +43,11 @@ const swaggerOptions = {
 
 // Inicializa o Swagger
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
-router.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 /**
  * @swagger
- * /api/register:
+ * /register:
  *   post:
  *     summary: Registra um novo usuário
  *     tags: [Usuários]
@@ -72,11 +71,11 @@ router.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
  *       400:
  *         description: Erro de validação
  */
-router.post('/api/register', register);
+router.post('/register', register);
 
 /**
  * @swagger
- * /api/login:
+ * /login:
  *   post:
  *     summary: Realiza o login do usuário
  *     tags: [Usuários]
@@ -100,13 +99,11 @@ router.post('/api/register', register);
  *       401:
  *         description: Credenciais inválidas
  */
-router.post('/api/login', login);
-
-router.use(authenticate);
+router.post('/login', login);
 
 /**
  * @swagger
- * /api/tasks:
+ * /tasks:
  *   post:
  *     summary: Cria uma nova tarefa
  *     tags: [Tarefas]
@@ -130,11 +127,11 @@ router.use(authenticate);
  *       201:
  *         description: Tarefa criada com sucesso
  */
-router.post('/api/tasks', createTask);
+router.post('/tasks', createTask);
 
 /**
  * @swagger
- * /api/tasks:
+ * /tasks:
  *   get:
  *     summary: Retorna todas as tarefas
  *     tags: [Tarefas]
@@ -144,11 +141,11 @@ router.post('/api/tasks', createTask);
  *       200:
  *         description: Lista de tarefas
  */
-router.get('/api/tasks', getTasks);
+router.get('/tasks', getTasks);
 
 /**
  * @swagger
- * /api/tasks/{id}:
+ * /tasks/{id}:
  *   put:
  *     summary: Atualiza uma tarefa existente
  *     tags: [Tarefas]
@@ -174,15 +171,15 @@ router.get('/api/tasks', getTasks);
  *                 type: string
  *     responses:
  *       200:
- *         description: Tarefa atualizada
+ *         description: Tarefa atualizada com sucesso
  *       404:
  *         description: Tarefa não encontrada
  */
-router.put('/api/tasks/:id', updateTask);
+router.put('/tasks/:id', updateTask);
 
 /**
  * @swagger
- * /api/tasks/{id}:
+ * /tasks/{id}:
  *   delete:
  *     summary: Exclui uma tarefa
  *     tags: [Tarefas]
@@ -201,11 +198,11 @@ router.put('/api/tasks/:id', updateTask);
  *       404:
  *         description: Tarefa não encontrada
  */
-router.delete('/api/tasks/:id', deleteTask);
+router.delete('/tasks/:id', deleteTask);
 
 /**
  * @swagger
- * /api/users:
+ * /users:
  *   get:
  *     summary: Retorna todos os usuários
  *     tags: [Usuários]
@@ -215,11 +212,11 @@ router.delete('/api/tasks/:id', deleteTask);
  *       200:
  *         description: Lista de usuários
  */
-router.get('/api/users', getUsers);
+router.get('/users', getUsers);
 
 /**
  * @swagger
- * /api/users:
+ * /users:
  *   delete:
  *     summary: Exclui um usuário
  *     tags: [Usuários]
@@ -229,6 +226,6 @@ router.get('/api/users', getUsers);
  *       204:
  *         description: Usuário excluído
  */
-router.delete('/api/users', deleteUser);
+router.delete('/users', deleteUser);
 
 module.exports = router;
