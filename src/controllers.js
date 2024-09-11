@@ -5,19 +5,43 @@ const { User, Task } = require('./models');
 
 exports.register = async (req, res) => {
   const { username, password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
+  console.log(username, password)  
+  // Verificar se todos os campos foram preenchidos
+  if (!username || !password) {
+    return res.status(400).json({ message: 'Preencha todos os campos' });
+  }
+
   try {
+    // Verificar se o usuário já existe
+    const userExists = await User.findOne({ username });
+    if (userExists) {
+      return res.status(400).json({ message: 'Usuário já existe' });
+    }
+
+    // Criptografar a senha
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Criar novo usuário
     const user = new User({ username, password: hashedPassword });
     await user.save();
-    res.status(201).json({ message: 'User registered' });
+
+    res.status(200).json({ message: 'Usuário registrado com sucesso' });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    console.error(error); // Logar o erro para facilitar a depuração
+    res.status(500).json({ message: 'Erro ao cadastrar' });
   }
 };
 
+
 exports.login = async (req, res) => {
+  console.log(req.body);
+  
   const { username, password } = req.body;
+  console.log(username, password);
+  
   const user = await User.findOne({ username });
+  console.log(user);
+  
   if (!user || !(await bcrypt.compare(password, user.password))) {
     return res.status(400).json({ message: 'Invalid credentials' });
   }
